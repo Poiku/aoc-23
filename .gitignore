@@ -67,7 +67,7 @@ project/plugins/project/
 .history
 .cache
 .lib/
-.scala-build/*
+.scala-build/
 
 ### SBT Patch ###
 .bsp/
@@ -80,7 +80,7 @@ project/plugins/project/
 hs_err_pid*
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode/
 
 # Local History for Visual Studio Code
 .history/
