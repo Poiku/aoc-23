@@ -1,7 +1,6 @@
+val input: Vector[String] = scala.io.Source.fromFile("input.txt", "UTF-8").mkString.split("\n").toVector
 
-val input: Vector[String] = scala.io.Source.fromFile("p2-testinput.txt", "UTF-8").mkString.split("\n").toVector
-
-val stringDigit: Map[String, Char] = Map(
+val stringToDigit: Map[String, Char] = Map(
     "one" -> '1',
     "two" -> '2',
     "three" -> '3',
@@ -15,15 +14,36 @@ val stringDigit: Map[String, Char] = Map(
 
 var sum: Int = 0
 for line <- input do
-    var firstDigit: Char = ' '
-    var i: Int = 0
-    while i < line.length() && firstDigit == ' ' do
-        if line(i).isDigit then firstDigit = line(i)
-        i += 1
+    var firstDigit: Char = line.find(_.isDigit).getOrElse(' ')
 
-    stringDigit.keys.foreach(key => // bra för att hitta den sista stringen, men inte den första
-        if line.contains(key) && line.indexOf(key) < (i - 1) then
-            println(stringDigit(key) + " " + line.indexOf(key) + " " + (i - 1))
-            firstDigit = stringDigit(key)
+    var firstString: String = " "
+    stringToDigit.keys.foreach(key =>
+        if line.contains(key) then
+            val keyIndex: Int = line.indexOf(key)
+            val currentStrIndex: Int = line.indexOf(firstString)
+
+            if currentStrIndex == -1 then firstString = key
+            else if keyIndex < currentStrIndex then firstString = key
     )
-    println(firstDigit)
+    var stringIndex: Int = line.indexOf(firstString); var digitIndex: Int = line.indexOf(firstDigit)
+    if firstString != " " && stringIndex < digitIndex || digitIndex == -1 then firstDigit = stringToDigit(firstString)
+
+
+    var lastDigit: Char = line.findLast(_.isDigit).getOrElse(' ')
+
+    var lastString: String = " "
+    stringToDigit.keys.foreach(key =>
+        if line.contains(key) then
+            val keyIndex: Int = line.lastIndexOf(key)
+            val currentStrIndex: Int = line.lastIndexOf(lastString)
+            
+            if currentStrIndex == -1 then lastString = key
+            else if keyIndex > currentStrIndex then lastString = key
+    )
+
+    stringIndex = line.lastIndexOf(lastString); digitIndex = line.lastIndexOf(lastDigit)
+    if lastString != " " && stringIndex > digitIndex || digitIndex == -1 then lastDigit = stringToDigit(lastString)
+
+    val num: Int = s"$firstDigit$lastDigit".toInt
+    sum += num
+println(s"Part 2 answer: $sum")

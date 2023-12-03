@@ -13,4 +13,4 @@ for line <- input do
     
     val num: Int = (firstDigit.toString() + lastDigit.toString()).toInt
     sum += num
-println(sum)
+println(s"Part 1 answer: $sum")
