@@ -1,0 +1,1 @@
+val input: Array[Array[String]] = scala.io.Source.fromFile("testinput.txt", "UTF-8").mkString.split("\n").map(_.split(": ").last.split(";"))
