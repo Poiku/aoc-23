@@ -1,0 +1,1 @@
+println((for line <- scala.io.Source.fromFile("input.txt", "UTF-8").mkString.split("\n").toVector.map(_.split(": ").last.split('|').map(_.split(" ")).map(_.filter(_.nonEmpty)).map(_.map(_.toInt))) yield if line(0).count(i => line(1).contains(i)) - 1 >= 0 then math.pow(2, line(0).count(i => line(1).contains(i)) - 1) else 0).sum.toInt)
